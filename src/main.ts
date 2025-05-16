@@ -7,7 +7,7 @@ interface ATMMachine {
   withdraw: (amount: number) => Money[]
 }
 
-class Bill {
+export class Bill {
   constructor(readonly amount: number) {
   }
 }
