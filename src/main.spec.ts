@@ -68,4 +68,11 @@ describe(ATM, () => {
       { denomination: 100, quantity: 1 },
     ])
   })
+
+  it("updates remaining bills for future withdrawals", () => {
+    const atm = new ATM([{denomination: 500, quantity: 2}, {denomination: 100, quantity: 1}, {denomination: 200, quantity: 5}])
+    atm.withdraw(1500)
+
+    expect(() => atm.withdraw(800)).toThrow(new NotEnoughMoneyInATM())
+  })
 })
