@@ -62,9 +62,13 @@ export class ATM implements ATMMachine {
 
     if (!bill || !amount) return []
 
-    const quantity = Math.floor(amount / bill.denomination)
-    const rest = amount % bill.denomination
-    const money = quantity > 0 ? {quantity, denomination: bill.denomination} : undefined
+    const maxQuantity = Math.floor(amount / bill.denomination)
+    const realQuantity = Math.min(maxQuantity, bill.quantity)
+    const diffQuantity = maxQuantity - realQuantity
+
+    const rest = (amount % bill.denomination) + diffQuantity * bill.denomination
+
+    const money = realQuantity > 0 ? {quantity: realQuantity, denomination: bill.denomination} : undefined
 
     if (!money) return this.withdrawBills(rest, bills.slice(1));
 
