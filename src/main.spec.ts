@@ -47,4 +47,14 @@ describe(ATM, () => {
 
     expect(() => atm.withdraw(130)).toThrow(new NotEnoughBillsInATM())
   })
+
+  it("adjusts the withdrawn bills to the available bills", () => {
+    const atm = new ATM([{denomination: 500, quantity: 1}, {denomination: 100, quantity: 5}])
+    const withdrawal = atm.withdraw(1000)
+
+    expect(withdrawal).toEqual([
+      { denomination: 500, quantity: 1 },
+      { denomination: 100, quantity: 5 },
+    ])
+  })
 })
