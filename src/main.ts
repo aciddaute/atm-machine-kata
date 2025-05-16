@@ -36,12 +36,19 @@ const defaultState = [
 
 export class ATM implements ATMMachine {
   private availableBills: Money[];
+  private get totalMoney(): number {
+    return this.availableBills.reduce((acc, curr) => acc + curr.denomination * curr.quantity, 0)
+  }
 
   constructor(availableBills: Money[] = defaultState) {
     this.availableBills = availableBills.sort((a, b) => b.denomination - a.denomination);
   }
 
   withdraw(amount: number): Money[] {
+    if (amount > this.totalMoney) {
+      throw new NotEnoughMoneyInATM()
+    }
+
     return this.withdrawBills(amount, this.availableBills);
   }
 
