@@ -12,37 +12,47 @@ export class Bill {
   }
 }
 
-const allBills = [
-  new Bill(500),
-  new Bill(200),
-  new Bill(100),
-  new Bill(50),
-  new Bill(20),
-  new Bill(10),
-  new Bill(5),
-  new Bill(2),
-  new Bill(1),
+export class NotEnoughMoneyInATM extends Error {}
+
+const defaultState = [
+  { denomination: 500, quantity: 2},
+{
+  denomination: 200, quantity: 3},
+{
+  denomination: 100, quantity: 5},
+{
+  denomination: 50, quantity: 12},
+{
+  denomination: 20, quantity: 20},
+{
+  denomination: 10, quantity: 50},
+{
+  denomination: 5, quantity: 100},
+{
+  denomination: 2, quantity: 250},
+{
+  denomination: 1, quantity: 500},
 ]
 
 export class ATM implements ATMMachine {
-  private availableBills: Bill[];
+  private availableBills: Money[];
 
-  constructor(availableBills: Bill[] = allBills) {
-    this.availableBills = availableBills.sort((a, b) => b.amount - a.amount);
+  constructor(availableBills: Money[] = defaultState) {
+    this.availableBills = availableBills.sort((a, b) => b.denomination - a.denomination);
   }
 
   withdraw(amount: number): Money[] {
     return this.withdrawBills(amount, this.availableBills);
   }
 
-  private withdrawBills(amount: number, bills: Bill[]): Money[] {
+  private withdrawBills(amount: number, bills: Money[]): Money[] {
     const bill = bills.at(0)
 
     if (!bill || !amount) return []
 
-    const quantity = Math.floor(amount / bill.amount)
-    const rest = amount % bill.amount
-    const money = quantity > 0 ? {quantity, denomination: bill.amount} : undefined
+    const quantity = Math.floor(amount / bill.denomination)
+    const rest = amount % bill.denomination
+    const money = quantity > 0 ? {quantity, denomination: bill.denomination} : undefined
 
     if (!money) return this.withdrawBills(rest, bills.slice(1));
 
