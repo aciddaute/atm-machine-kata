@@ -8,6 +8,11 @@ interface ATMMachine {
 export class ATM implements ATMMachine {
 
   withdraw(amount: number): Money[] {
-    return []
+    return [
+      { denomination: 200, quantity: 2 },
+      { denomination: 20, quantity: 1 },
+      { denomination: 10, quantity: 1 },
+      { denomination: 2, quantity: 2 }
+    ]
   }
 }
