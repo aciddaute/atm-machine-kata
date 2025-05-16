@@ -1,10 +1,17 @@
 import { describe, it, expect } from "vitest"
-import { myFunction } from "./main.js"
+import { ATM } from "./main.js";
 
-describe("Default test", () => {
-  it("should work", () => {
-    const result = myFunction()
+describe(ATM, () => {
+  it("withdraws 434€ using the minimum amount of bills/coins", () => {
+    const atm = new ATM()
 
-    expect(result).toBe(true)
+    const withdrawal = atm.withdraw(434)
+
+    expect(withdrawal).toEqual([
+      { denomination: 200, quantity: 2 },
+      { denomination: 20, quantity: 1 },
+      { denomination: 10, quantity: 1 },
+      { denomination: 2, quantity: 2 }
+    ])
   })
 })
