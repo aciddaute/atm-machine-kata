@@ -40,7 +40,7 @@ export class ATM implements ATMMachine {
     const bills: Money[] = []
     let remainingAmount = amount
 
-    this.availableBills.forEach((bill) => {
+    this.availableBills.sort((a, b) => b.amount - a.amount).forEach((bill) => {
       const {money, rest} = this.withdrawBills(remainingAmount, bill)
       if (money) {
         bills.push(money)
