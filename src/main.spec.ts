@@ -57,4 +57,15 @@ describe(ATM, () => {
       { denomination: 100, quantity: 5 },
     ])
   })
+
+  it("adjusts the withdrawn bills to the available bills (more complex)", () => {
+    const atm = new ATM([{denomination: 500, quantity: 2}, {denomination: 100, quantity: 1}, {denomination: 200, quantity: 5}])
+    const withdrawal = atm.withdraw(1500)
+
+    expect(withdrawal).toEqual([
+      { denomination: 500, quantity: 2 },
+      { denomination: 200, quantity: 2 },
+      { denomination: 100, quantity: 1 },
+    ])
+  })
 })
