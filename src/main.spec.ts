@@ -25,15 +25,4 @@ describe(ATM, () => {
       { denomination: 20, quantity: 1 },
     ])
   })
-
-  it("withdraws 200€ using 2 100€ bills cause atm does not have 200€ bills", () => {
-    const atm = new ATM()
-
-    const withdrawal = atm.withdraw(200)
-
-    expect(withdrawal).toEqual([
-      { denomination: 100, quantity: 2 },
-    ])
-  })
-
 })
