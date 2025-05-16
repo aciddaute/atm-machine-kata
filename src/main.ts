@@ -23,9 +23,14 @@ const defaultState = [
 ]
 
 export class ATM implements ATMMachine {
+
   private availableBills: Money[];
   private get totalMoney(): number {
-    return this.availableBills.reduce((acc, curr) => acc + curr.denomination * curr.quantity, 0)
+    return this.getTotalMoney(this.availableBills)
+  }
+
+  private getTotalMoney(availableBills: Money[]): number {
+    return availableBills.reduce((acc, curr) => acc + curr.denomination * curr.quantity, 0)
   }
 
   constructor(availableBills: Money[] = defaultState) {
@@ -37,12 +42,12 @@ export class ATM implements ATMMachine {
       throw new NotEnoughMoneyInATM()
     }
 
-    const bills = this.withdrawBills(amount, this.availableBills);
-    const totalWithdraw = bills.reduce((acc, curr) => acc + curr.denomination * curr.quantity, 0);
+    const withdrawnBills = this.withdrawBills(amount, this.availableBills);
+    const totalWithdraw = this.getTotalMoney(withdrawnBills);
 
     if (totalWithdraw !== amount) throw new NotEnoughBillsInATM()
 
-    return bills;
+    return withdrawnBills;
   }
 
   private withdrawBills(amount: number, bills: Money[]): Money[] {
