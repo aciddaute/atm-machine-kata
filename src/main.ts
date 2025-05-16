@@ -7,11 +7,6 @@ interface ATMMachine {
   withdraw: (amount: number) => Money[]
 }
 
-export class Bill {
-  constructor(readonly amount: number) {
-  }
-}
-
 export class NotEnoughMoneyInATM extends Error {}
 export class NotEnoughBillsInATM extends Error {}
 
