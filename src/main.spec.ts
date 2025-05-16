@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { ATM, Bill, NotEnoughMoneyInATM } from "./main.js";
+import { ATM, Bill, NotEnoughBillsInATM, NotEnoughMoneyInATM } from "./main.js";
 
 describe(ATM, () => {
   it("withdraws 434€ using the minimum amount of bills/coins", () => {
@@ -40,5 +40,11 @@ describe(ATM, () => {
     const atm = new ATM([{denomination: 10, quantity: 1}])
 
     expect(() => atm.withdraw(20)).toThrow(new NotEnoughMoneyInATM())
+  })
+
+  it("throws if ATM cannot build the amount with current bills", () => {
+    const atm = new ATM([{denomination: 200, quantity: 20}])
+
+    expect(() => atm.withdraw(130)).toThrow(new NotEnoughBillsInATM())
   })
 })

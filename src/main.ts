@@ -13,6 +13,7 @@ export class Bill {
 }
 
 export class NotEnoughMoneyInATM extends Error {}
+export class NotEnoughBillsInATM extends Error {}
 
 const defaultState = [
   { denomination: 500, quantity: 2},
