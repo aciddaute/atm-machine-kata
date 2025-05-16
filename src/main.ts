@@ -66,6 +66,8 @@ export class ATM implements ATMMachine {
     const realQuantity = Math.min(maxQuantity, bill.quantity)
     const diffQuantity = maxQuantity - realQuantity
 
+    this.subtractQuantity(bill.denomination, realQuantity)
+
     const rest = (amount % bill.denomination) + diffQuantity * bill.denomination
 
     const money = realQuantity > 0 ? {quantity: realQuantity, denomination: bill.denomination} : undefined
@@ -74,4 +76,16 @@ export class ATM implements ATMMachine {
 
     return [money, ... this.withdrawBills(rest, bills.slice(1))]
   }
+
+  private subtractQuantity(denomination: number, subtractedBills: number) {
+
+    this.availableBills = this.availableBills.map(bill => {
+      if (bill.denomination === denomination) {
+        return {denomination: bill.denomination, quantity: bill.quantity - subtractedBills }
+      }
+
+      return bill
+    })
+  }
 }
+
