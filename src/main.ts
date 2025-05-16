@@ -12,20 +12,13 @@ export class NotEnoughBillsInATM extends Error {}
 
 const defaultState = [
   { denomination: 500, quantity: 2},
-{
-  denomination: 200, quantity: 3},
-{
-  denomination: 100, quantity: 5},
-{
-  denomination: 50, quantity: 12},
-{
-  denomination: 20, quantity: 20},
-{
-  denomination: 10, quantity: 50},
-{
-  denomination: 5, quantity: 100},
-{
-  denomination: 2, quantity: 250},
+  { denomination: 200, quantity: 3},
+  { denomination: 100, quantity: 5},
+  { denomination: 50, quantity: 12},
+  { denomination: 20, quantity: 20},
+  { denomination: 10, quantity: 50},
+  { denomination: 5, quantity: 100},
+  { denomination: 2, quantity: 250},
   { denomination: 1, quantity: 500},
 ]
 
@@ -73,7 +66,6 @@ export class ATM implements ATMMachine {
   }
 
   private subtractQuantity(denomination: number, subtractedBills: number) {
-
     this.availableBills = this.availableBills.map(bill => {
       if (bill.denomination === denomination) {
         return {denomination: bill.denomination, quantity: bill.quantity - subtractedBills }
