@@ -18,7 +18,7 @@ describe(ATM, () => {
   it("withdraws 220€ using the minimum amount of bills/coins", () => {
     const atm = new ATM()
 
-    const withdrawal = atm.withdraw(434)
+    const withdrawal = atm.withdraw(220)
 
     expect(withdrawal).toEqual([
       { denomination: 200, quantity: 1 },
