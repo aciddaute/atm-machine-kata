@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest"
-import { ATM, Bill, NotEnoughBillsInATM, NotEnoughMoneyInATM } from "./main.js";
+import { describe, expect, it } from "vitest";
+import { ATM, NotEnoughBillsInATM, NotEnoughMoneyInATM } from "./main.js";
 
 describe(ATM, () => {
   it("withdraws 434€ using the minimum amount of bills/coins", () => {

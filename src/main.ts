@@ -31,8 +31,7 @@ const defaultState = [
   denomination: 5, quantity: 100},
 {
   denomination: 2, quantity: 250},
-{
-  denomination: 1, quantity: 500},
+  { denomination: 1, quantity: 500},
 ]
 
 export class ATM implements ATMMachine {
@@ -50,7 +49,12 @@ export class ATM implements ATMMachine {
       throw new NotEnoughMoneyInATM()
     }
 
-    return this.withdrawBills(amount, this.availableBills);
+    const bills = this.withdrawBills(amount, this.availableBills);
+    const totalWithdraw = bills.reduce((acc, curr) => acc + curr.denomination * curr.quantity, 0);
+
+    if (totalWithdraw !== amount) throw new NotEnoughBillsInATM()
+
+    return bills;
   }
 
   private withdrawBills(amount: number, bills: Money[]): Money[] {
@@ -65,5 +69,5 @@ export class ATM implements ATMMachine {
     if (!money) return this.withdrawBills(rest, bills.slice(1));
 
     return [money, ... this.withdrawBills(rest, bills.slice(1))]
-    }
+  }
 }
