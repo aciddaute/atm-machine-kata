@@ -36,9 +36,8 @@ describe(ATM, () => {
     ])
   })
 
-  it("can run out of bills", () => {
+  it("throws if ATM does not have enough money", () => {
     const atm = new ATM([{denomination: 10, quantity: 1}])
-
 
     expect(() => atm.withdraw(20)).toThrow(new NotEnoughMoneyInATM())
   })
